@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+# See https://docs.docker.com/compose/environment-variables/#the-env-file
+
+### PORTS ###########################################
+NGINX_PORT=9720
+PHPMYADMIN_PORT=9721
+MONGODB_PORT=9722
+VUE_PORT=9723
+WEB_PORT=9724
+REDIS_PORT=9725
+
+### DEFAULT ###########################################
+PHP_DIRECTORY=api
+VITE_DIRECTORY=vue
+
+### WORKSPACE #############################################
+WORKSPACE_INSTALL_SUPERVISOR=true
+
+### PHP Version ###########################################
+# Select a PHP version of the Workspace and PHP-FPM containers (Does not apply to HHVM).
+# Accepted values: 8.2 - 8.1 - 8.0 - 7.4 - 7.3 - 7.2 - 7.1 - 7.0 - 5.6
+PHP_VERSION=8.2
+PHP_COMPOSER_VERSION=2.2.22
+
+### PHP_FPM ###############################################
+PHP_FPM_INSTALL_MONGO=true
+PHP_FPM_INSTALL_LDAP=true
+PHP_FPM_INSTALL_INTL=true
+PHP_FPM_INSTALL_MYSQLI=true
+PHP_FPM_INSTALL_PHPREDIS=true
+PHP_FPM_INSTALL_IMAGEMAGICK=true
+PHP_FPM_INSTALL_MEMCACHED=true
+PHP_FPM_INSTALL_XSL=true
+PHP_FPM_INSTALL_APCU=true
+PHP_FPM_INSTALL_XDEBUG=true
+
+### NGINX #################################################
+NGINX_HOST_LOG_PATH=./.docker/logs/nginx/
+
+### MYSQL #################################################
+MYSQL_HOST=mysqldb
+MYSQL_DATABASE=laminasvben_works
+MYSQL_ROOT_USER=root
+MYSQL_ROOT_PASSWORD=
+
+### MIGRATION #################################################
+MIGRATION_FILE=laminasvben_works.mwb
+MIGRATION_PATH=data/DoctrineORMModule/Migrations
+
+### MONGODB ###########################################
+MONGO_URL=mongodb://mongodb:27017
+MONGO_HOST=mongodb
+MONGO_INITDB_ROOT_USERNAME=admin
+MONGO_INITDB_ROOT_PASSWORD=
+MONGO_INITDB_DATABASE=laminasvben_works
+
+### REDIS ###########################################
+REDIS_PASSWORD=
+
+### OAUTH ###########################################
+CHECK_KEY=
+CHECK_SECRET=
+
+### GOOGLE RECAPTCHA ###########################################
+GOOGLE_RECAPTCHA_SITE_KEY=
+GOOGLE_RECAPTCHA_SECRET_KEY=
+
+### PHP ENCRYPT ############################################
+## 使用 openssl rand -base64 14 來生成一個 256 位的密鑰。
+## 這些參數是用於 PHP 的 openssl_encrypt 函數的。以下是每個參數的解釋：
+## PHP_ENCRYPT_METHOD: 這是加密演算法的名稱。在這個例子中，使用的是 "AES-256-CBC"，這是一種非常安全的對稱加密演算法。"AES" 代表 "Advanced Encryption Standard"，"256" 代表密鑰長度為 256 位，"CBC" 代表 "Cipher Block Chaining"，這是一種特定的加密模式。
+## PHP_ENCRYPT_KEY: 這是用於加密和解密的密鑰。在 "AES-256-CBC" 演算法中，密鑰長度必須為 256 位。這個值應該被妥善保管，並且不應該在任何地方明文顯示。
+## PHP_ENCRYPT_IV: 這是初始化向量 (IV)。在 "CBC" 模式中，每一個數據塊在被加密前，會先與前一個數據塊的密文進行 XOR 運算。對於第一個數據塊，因為沒有前一個數據塊，所以需要一個初始化向量來進行 XOR 運算。這個值也應該被妥善保管，但它不需要像密鑰那樣保密。
+## PHP_ENCRYPT_OPTION: 這是 openssl_encrypt 函數的第四個參數，它可以用來設定一些加密選項。在這個例子中，它的值為 0，這代表沒有設定任何選項。
+PHP_ENCRYPT_METHOD=AES-256-CBC
+PHP_ENCRYPT_KEY=
+PHP_ENCRYPT_IV=
+PHP_ENCRYPT_OPTION=0

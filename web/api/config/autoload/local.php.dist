@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * Local Configuration Override
+ *
+ * This configuration override file is for overriding environment-specific and
+ * security-sensitive configuration information. Copy this file without the
+ * .dist extension at the end and populate values as needed.
+ *
+ * @NOTE: This file is ignored from Git by default with the .gitignore included
+ * in LaminasSkeletonApplication. This is a good practice, as it prevents sensitive
+ * credentials from accidentally being committed into version control.
+ */
+
+return [
+    'base-path' => '',
+    'file-url' => 'http://laminasvben-works.test:' . $_ENV['WEB_PORT'] . '/files',
+    'phpSettings' => [
+        'session.save_handler' => \redis::class,
+        'session.save_path' => 'tcp://redis:6379?auth=' . $_ENV['REDIS_PASSWORD'],
+        'session.cookie_httponly' => true,  // 防止你的 cookie 被 JavaScript 讀取
+        'session.cookie_secure' => false,    // 防止你的 cookie 在明文 HTTP 上傳輸 (正式機要打開)
+        'session.gc_maxlifetime' => 86400,
+        'max_execution_time' => 60,
+        'date.timezone' => 'Asia/Taipei',
+        'mb_internal_encoding' => 'UTF-8',
+        'upload_max_filesize' => '40M',
+        'post_max_size' => '40M',
+        'memory_limit' => '128M',
+    ],
+    'session_config' => [
+        'remember_me_seconds' => 3600,
+        'name' => 'laminasvben_works_session',
+    ],
+    'session_manager' => [
+        'validators' => [
+            0 => \Laminas\Session\Validator\RemoteAddr::class,
+        ],
+    ],
+    'session_storage' => [
+        'type' => \Laminas\Session\Storage\SessionArrayStorage::class,
+    ],
+];
